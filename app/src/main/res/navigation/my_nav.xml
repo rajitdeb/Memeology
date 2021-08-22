@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/myNav"
+    app:startDestination="@id/randomMeme">
+
+    <fragment
+        android:id="@+id/randomMeme"
+        android:name="com.rajit.memeology.ui.fragment.RandomMeme"
+        android:label="@string/random"
+        tools:layout="@layout/fragment_random_meme" />
+    <fragment
+        android:id="@+id/discoverMeme"
+        android:name="com.rajit.memeology.ui.fragment.DiscoverMeme"
+        android:label="@string/discover"
+        tools:layout="@layout/fragment_discover_meme" >
+        <action
+            android:id="@+id/action_discoverMeme_to_detailsActivity"
+            app:destination="@id/detailsActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouritesMeme"
+        android:name="com.rajit.memeology.ui.fragment.FavouriteMeme"
+        android:label="@string/favourites"
+        tools:layout="@layout/fragment_favourite_meme" />
+    <activity
+        android:id="@+id/detailsActivity"
+        android:name="com.rajit.memeology.ui.activity.DetailsActivity"
+        android:label="Details"
+        tools:layout="@layout/activity_details" />
+</navigation>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="discoverMemeData"
+            type="com.rajit.memeology.models.Meme" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/discoverMemeCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:elevation="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="#"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/itemSubReddit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{discoverMemeData.subreddit}"
+                    tools:text="programmingmemes"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                    app:layout_constraintStart_toEndOf="@+id/textView3"
+                    app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+                <ImageView
+                    android:id="@+id/itemFavourites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_bookmark_temp"
+                    app:layout_constraintBottom_toBottomOf="@+id/itemDownload"
+                    app:layout_constraintEnd_toStartOf="@+id/itemDownload"
+                    app:layout_constraintTop_toTopOf="@+id/itemDownload"
+                    app:tint="@color/grey" />
+
+                <ImageView
+                    android:id="@+id/itemDownload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_download"
+                    app:layout_constraintBottom_toBottomOf="@+id/itemShare"
+                    app:layout_constraintEnd_toStartOf="@+id/itemShare"
+                    app:layout_constraintTop_toTopOf="@+id/itemShare"
+                    app:tint="@color/grey" />
+
+                <ImageView
+                    android:id="@+id/itemShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_share"
+                    app:layout_constraintBottom_toBottomOf="@+id/itemAuthor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/itemSubReddit"
+                    app:tint="@color/grey" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="By"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/textView3"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                <TextView
+                    android:id="@+id/itemAuthor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{discoverMemeData.author}"
+                    tools:text="yikes45729_ko"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@+id/itemSubReddit"
+                    app:layout_constraintStart_toEndOf="@+id/textView7"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                <ImageView
+                    android:id="@+id/itemMemeImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:minHeight="300dp"
+                    android:scaleType="fitXY"
+                    android:loadImageForDiscover="@{discoverMemeData.url}"
+                    android:src="@drawable/placeholder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/itemAuthor" />
+
+                <TextView
+                    android:id="@+id/itemMemeTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{discoverMemeData.title}"
+                    tools:text="@string/placeholder_text"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="@+id/itemShare"
+                    app:layout_constraintStart_toStartOf="@+id/textView3"
+                    app:layout_constraintTop_toBottomOf="@+id/itemMemeImg" />
+
+                <ImageView
+                    android:id="@+id/itemLikeImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_like"
+                    app:layout_constraintEnd_toEndOf="@+id/itemLike"
+                    app:layout_constraintStart_toStartOf="@+id/itemLike"
+                    app:layout_constraintTop_toBottomOf="@+id/itemMemeTitle"
+                    app:tint="@color/purple" />
+
+                <TextView
+                    android:id="@+id/itemLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(discoverMemeData.ups)}"
+                    tools:text="125488"
+                    android:textColor="@color/purple"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/itemMemeTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/itemLikeImg" />
+
+                <Button
+                    android:id="@+id/itemLinkToPost"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/link_to_post"
+                    app:layout_constraintBottom_toBottomOf="@+id/itemLike"
+                    app:layout_constraintEnd_toEndOf="@+id/itemMemeTitle"
+                    app:layout_constraintTop_toTopOf="@+id/itemLike" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

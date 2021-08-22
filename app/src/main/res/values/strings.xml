@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Memeology</string>
+    <!-- Bottom Nav View Tabs -->
+    <string name="random">Random</string>
+    <string name="discover">Discover</string>
+    <string name="favourites">Favourites</string>
+
+    <!-- Meme Post -->
+    <string name="placeholder_text">The more you gain power the more humble you should be.</string>
+    <string name="link_to_post">Link to Post</string>
+    <string name="by">By</string>
+    <string name="share_button">Share Button</string>
+    <string name="download_button">Download Button</string>
+    <string name="meme_image">Meme Image</string>
+    <string name="like_button">Like Button</string>
+    <string name="comments_button">Comments Button</string>
+    <string name="next">Next</string>
+    <string name="shake_to_see_next_meme">&#42;&#42;&#32;Shake to see next meme&#32;&#42;&#42;</string>
+    <string name="no_internet_connection_image">No internet connection image</string>
+    <string name="no_internet_connection_available_please_check_the_connection_and_try_again_later">No internet connection available. Please check the connection and try again later.</string>
+
+    <string name="share_text">Hey, i found a really funny meme. Check it out.
+        \n\nPost: %1$s, \nMeme: %2$s
+        \n\nI got to know about this meme from this app. App Link:
+    https://play.google.com/store/apps/details?id=com.official.sebaguide</string>
+    <string name="delete">Delete</string>
+    <string name="delete_all">Delete All</string>
+    <string name="search_by_category">Search By Category</string>
+</resources>

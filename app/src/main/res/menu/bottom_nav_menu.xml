@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/randomMeme"
+        android:icon="@drawable/ic_random"
+        android:title="@string/random"
+        app:iconTint="@color/white" />
+
+    <item
+        android:id="@+id/discoverMeme"
+        android:icon="@drawable/ic_discover"
+        android:title="@string/discover"
+        app:iconTint="@color/white"/>
+
+    <item
+        android:id="@+id/favouritesMeme"
+        android:icon="@drawable/ic_favourites"
+        android:title="@string/favourites"
+        app:iconTint="@color/white"/>
+</menu>
