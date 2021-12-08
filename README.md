@@ -6,7 +6,7 @@ A memes app for all the memes lovers
 ![Release Version](https://img.shields.io/badge/release-v1.0.0-blue)
 
 ## App Icon
-![App Icon](Screenshots/App%20Icons/Group%208.png)
+<img src="Screenshots/App%20Icons/Group%208.png" width="200" height="200" alt="App Icon">
 
 ## Project Banner
 ![Project Thumbnail](Screenshots/App%20Banner.png)
