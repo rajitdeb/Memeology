@@ -40,7 +40,6 @@ Rajit Deb
 
 ## Find me on
 [![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/imrajit/)
-[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/rajit.deb/)
 
 [1]: https://github.com/rajitdeb/Memeology/raw/main/apk/app-debug.apk
 [2]: https://github.com/D3vd/Meme_Api
