@@ -20,8 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: Repository,
-    application: Application
-) : AndroidViewModel(application) {
+    private val application: Application
+) : ViewModel() {
 
     /** ROOM **/
 
@@ -119,6 +119,10 @@ class MainViewModel @Inject constructor(
                 NetworkResult.Error("No memes found with the search query")
             }
 
+            response.code() == 403 -> {
+                NetworkResult.Error("Unable to access the Subreddit. Either it is locked or private.")
+            }
+
             response.isSuccessful -> {
                 val randomMeme = response.body()
                 NetworkResult.Success(randomMeme!!)
@@ -134,7 +138,7 @@ class MainViewModel @Inject constructor(
     // code for checking internet connectivity
     fun hasInternetConnection(): Boolean {
         val connectivityManager =
-            getApplication<Application>().getSystemService(Context.CONNECTIVITY_SERVICE)
+            application.getSystemService(Context.CONNECTIVITY_SERVICE)
                     as ConnectivityManager
 
         val activeNetwork = connectivityManager.activeNetwork ?: return false

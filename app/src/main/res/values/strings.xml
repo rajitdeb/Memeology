@@ -26,4 +26,5 @@
     <string name="delete">Delete</string>
     <string name="delete_all">Delete All</string>
     <string name="search_by_category">Search By Category</string>
+    <string name="save_to_favourites_button">Save to Favourites Button</string>
 </resources>

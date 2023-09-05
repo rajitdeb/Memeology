@@ -1,11 +1,16 @@
 package com.rajit.memeology.ui.fragment
 
 import android.os.Bundle
-import android.os.Message
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +28,7 @@ class DiscoverMeme : Fragment(), SearchView.OnQueryTextListener {
     private val binding get() = _binding!!
 
     private val mainViewModel by viewModels<MainViewModel>()
+
     private val mAdapter: DiscoverMemesAdapter by lazy {
         DiscoverMemesAdapter(mainViewModel)
     }
@@ -36,16 +42,14 @@ class DiscoverMeme : Fragment(), SearchView.OnQueryTextListener {
         // Inflate the layout for this fragment
         _binding = FragmentDiscoverMemeBinding.inflate(inflater, container, false)
 
-        setHasOptionsMenu(true)
-
         binding.discoverMemeRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
             setHasFixedSize(true)
         }
 
-        mainViewModel.searchMemesResponse.observe(viewLifecycleOwner, { result ->
-            when(result){
+        mainViewModel.searchMemesResponse.observe(viewLifecycleOwner) { result ->
+            when (result) {
                 is NetworkResult.Success -> {
                     mAdapter.setData(result.data?.memes!!)
                     hideLoadingView()
@@ -53,10 +57,10 @@ class DiscoverMeme : Fragment(), SearchView.OnQueryTextListener {
 
                 is NetworkResult.Error -> {
                     hideLoadingView()
-                    if(!mainViewModel.hasInternetConnection()){
+                    if (!mainViewModel.hasInternetConnection()) {
                         showNoInternetViews()
                     }
-                    if(!(result.message!!.contains("No internet"))){
+                    if (!(result.message!!.contains("No internet"))) {
                         showCustomErrorMessage(result.message.toString())
                     }
                 }
@@ -65,18 +69,31 @@ class DiscoverMeme : Fragment(), SearchView.OnQueryTextListener {
                     showLoadingView()
                 }
             }
-        })
+        }
 
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.discover_menu, menu)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val search = menu.findItem(R.id.searchByCategory)
-        searchView = search.actionView as? SearchView
-        searchView?.isSubmitButtonEnabled = true
-        searchView?.setOnQueryTextListener(this)
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.discover_menu, menu)
+
+                val search = menu.findItem(R.id.searchByCategory)
+                searchView = search.actionView as? SearchView
+                searchView?.isSubmitButtonEnabled = true
+                searchView?.setOnQueryTextListener(this@DiscoverMeme)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                TODO("Not yet implemented")
+            }
+        }, viewLifecycleOwner)
+
     }
 
     override fun onDestroyView() {

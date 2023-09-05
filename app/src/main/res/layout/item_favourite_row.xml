@@ -52,7 +52,8 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="#" />
+                    android:text="#"
+                    tools:ignore="HardcodedText" />
 
                 <!-- #programmingmemes -->
                 <TextView

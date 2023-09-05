@@ -14,13 +14,15 @@ import com.rajit.memeology.utils.MemesDiffUtil
 import com.rajit.memeology.utils.PostActions
 import com.rajit.memeology.viewmodels.MainViewModel
 
-class DiscoverMemesAdapter(private val mainViewModel: MainViewModel) :
-    RecyclerView.Adapter<DiscoverMemesAdapter.MyViewHolder>() {
+class DiscoverMemesAdapter(
+    private val mainViewModel: MainViewModel
+) : RecyclerView.Adapter<DiscoverMemesAdapter.MyViewHolder>() {
 
     private var mDiscoverMemesList: List<Meme> = mutableListOf()
 
-    class MyViewHolder(private val binding: ItemDiscoverMemeBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(
+        private val binding: ItemDiscoverMemeBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val postActions = PostActions()
 

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="discoverMemeData"
             type="com.rajit.memeology.models.Meme" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp">
@@ -42,26 +43,28 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/itemSubReddit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{discoverMemeData.subreddit}"
-                    tools:text="programmingmemes"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/textView3"
                     app:layout_constraintStart_toEndOf="@+id/textView3"
-                    app:layout_constraintTop_toTopOf="@+id/textView3" />
+                    app:layout_constraintTop_toTopOf="@+id/textView3"
+                    tools:text="programmingmemes" />
 
                 <ImageView
                     android:id="@+id/itemFavourites"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/save_to_favourites_button"
                     android:src="@drawable/ic_bookmark_temp"
                     app:layout_constraintBottom_toBottomOf="@+id/itemDownload"
                     app:layout_constraintEnd_toStartOf="@+id/itemDownload"
@@ -73,6 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/download_button"
                     android:src="@drawable/ic_download"
                     app:layout_constraintBottom_toBottomOf="@+id/itemShare"
                     app:layout_constraintEnd_toStartOf="@+id/itemShare"
@@ -84,6 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/share_button"
                     android:src="@drawable/ic_share"
                     app:layout_constraintBottom_toBottomOf="@+id/itemAuthor"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +102,8 @@
                     android:text="By"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/textView3"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/itemAuthor"
@@ -107,20 +113,21 @@
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="@{discoverMemeData.author}"
-                    tools:text="yikes45729_ko"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@+id/itemSubReddit"
                     app:layout_constraintStart_toEndOf="@+id/textView7"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    tools:text="yikes45729_ko" />
 
                 <ImageView
                     android:id="@+id/itemMemeImg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:contentDescription="@string/meme_image"
+                    android:loadImageForDiscover="@{discoverMemeData.url}"
                     android:minHeight="300dp"
                     android:scaleType="fitXY"
-                    android:loadImageForDiscover="@{discoverMemeData.url}"
                     android:src="@drawable/placeholder"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -132,17 +139,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@{discoverMemeData.title}"
-                    tools:text="@string/placeholder_text"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="@+id/itemShare"
                     app:layout_constraintStart_toStartOf="@+id/textView3"
-                    app:layout_constraintTop_toBottomOf="@+id/itemMemeImg" />
+                    app:layout_constraintTop_toBottomOf="@+id/itemMemeImg"
+                    tools:text="@string/placeholder_text" />
 
                 <ImageView
                     android:id="@+id/itemLikeImg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:contentDescription="@string/like_button"
                     android:src="@drawable/ic_like"
                     app:layout_constraintEnd_toEndOf="@+id/itemLike"
                     app:layout_constraintStart_toStartOf="@+id/itemLike"
@@ -154,11 +162,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{String.valueOf(discoverMemeData.ups)}"
-                    tools:text="125488"
                     android:textColor="@color/purple"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/itemMemeTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/itemLikeImg" />
+                    app:layout_constraintTop_toBottomOf="@+id/itemLikeImg"
+                    tools:text="125488" />
 
                 <Button
                     android:id="@+id/itemLinkToPost"

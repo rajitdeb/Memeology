@@ -1,9 +1,14 @@
 package com.rajit.memeology.ui.fragment
 
 import android.os.Bundle
-import android.view.*
-import android.widget.SearchView
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,8 +19,6 @@ import com.rajit.memeology.utils.PostActions
 import com.rajit.memeology.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-const val TAG = "FavouriteMemeFragment"
-
 @AndroidEntryPoint
 class FavouriteMeme : Fragment(){
 
@@ -25,6 +28,7 @@ class FavouriteMeme : Fragment(){
     private val postActions = PostActions()
 
     private val mainViewModel by viewModels<MainViewModel>()
+
     private val mAdapter: FavouriteMemesAdapter by lazy {
         FavouriteMemesAdapter(requireActivity(), binding.coordinatorLayout, mainViewModel)
     }
@@ -36,8 +40,6 @@ class FavouriteMeme : Fragment(){
         // Inflate the layout for this fragment
         _binding = FragmentFavouriteMemeBinding.inflate(inflater, container, false)
 
-        setHasOptionsMenu(true)
-
         binding.favouritesRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
@@ -45,27 +47,45 @@ class FavouriteMeme : Fragment(){
         }
 
         // Read Favourites
-        mainViewModel.favouritesResponse.observe(viewLifecycleOwner, { result ->
+        mainViewModel.favouritesResponse.observe(viewLifecycleOwner) { result ->
             mAdapter.setData(result)
-        })
+        }
 
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.favourite_meme_menu, menu)
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.deleteAll){
-            if (mainViewModel.favouritesResponse.value!!.isNotEmpty()) {
-                mainViewModel.deleteAllFavourites()
-                postActions.showSnackBarMessage(binding.coordinatorLayout, "Deleted all items from favourites")
-            } else {
-                postActions.showSnackBarMessage(binding.coordinatorLayout, "Nothing to delete")
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object: MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.favourite_meme_menu, menu)
             }
-        }
-        return super.onOptionsItemSelected(item)
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                if(menuItem.itemId == R.id.deleteAll){
+                    if (mainViewModel.favouritesResponse.value!!.isNotEmpty()) {
+
+                        mainViewModel.deleteAllFavourites()
+
+                        postActions.showSnackBarMessage(
+                            binding.coordinatorLayout,
+                            "Deleted all items from favourites"
+                        )
+
+                    } else {
+                        postActions.showSnackBarMessage(
+                            binding.coordinatorLayout,
+                            "Nothing to delete"
+                        )
+                    }
+                }
+
+                return false
+            }
+        }, viewLifecycleOwner)
     }
 
     override fun onStop() {

@@ -2,13 +2,16 @@ package com.rajit.memeology.adapters
 
 import android.Manifest
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.Log
-import android.view.*
+import android.view.ActionMode
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
@@ -19,13 +22,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rajit.memeology.R
 import com.rajit.memeology.data.local.entities.FavouritesEntity
 import com.rajit.memeology.databinding.ItemFavouriteRowBinding
-import com.rajit.memeology.utils.*
+import com.rajit.memeology.utils.DownloadUtil
+import com.rajit.memeology.utils.MemesDiffUtil
+import com.rajit.memeology.utils.PermissionUtil
+import com.rajit.memeology.utils.PostActions
+import com.rajit.memeology.utils.sdk29AndUp
 import com.rajit.memeology.viewmodels.MainViewModel
 
 class FavouriteMemesAdapter(
     private val requireActivity: FragmentActivity,
     private val rootLayout: CoordinatorLayout,
-    val mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel
 ) : RecyclerView.Adapter<FavouriteMemesAdapter.FavouritesViewHolder>(), ActionMode.Callback {
 
     private var favouriteMemesList = emptyList<FavouritesEntity>()
@@ -82,36 +89,59 @@ class FavouriteMemesAdapter(
 
         holder.binding.itemDownload.setOnClickListener {
 
-            if(mainViewModel.hasInternetConnection()){
+            if (mainViewModel.hasInternetConnection()) {
                 val memeFileName = currentFavourite.meme.url.subSequence(
-                    currentFavourite.meme.url.lastIndexOf("/")+1, currentFavourite.meme.url.lastIndex + 1)
+                    currentFavourite.meme.url.lastIndexOf("/") + 1,
+                    currentFavourite.meme.url.lastIndex + 1
+                )
 
                 sdk29AndUp {
                     DownloadUtil.downloadMeme(
                         recyclerViewLayout.context,
                         memeFileName.toString(),
                         holder.binding.itemMemeImage.drawable,
-                        currentFavourite.meme.url)
+                        currentFavourite.meme.url
+                    )
 
-                    Toast.makeText(rootLayout.context, "Meme downloaded successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        rootLayout.context,
+                        "Meme downloaded successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                } ?: if (ContextCompat.checkSelfPermission(recyclerViewLayout.context,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                } ?: if (ContextCompat.checkSelfPermission(
+                        recyclerViewLayout.context,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) == PackageManager.PERMISSION_GRANTED
                 ) {
+
                     DownloadUtil.downloadMeme(
                         recyclerViewLayout.context,
                         memeFileName.toString(),
                         holder.binding.itemMemeImage.drawable,
-                        currentFavourite.meme.url)
-                    Toast.makeText(rootLayout.context, "Meme downloaded successfully", Toast.LENGTH_SHORT).show()
-                }else{
+                        currentFavourite.meme.url
+                    )
+
+                    Toast.makeText(
+                        rootLayout.context,
+                        "Meme downloaded successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                } else {
+
                     PermissionUtil.checkForStoragePermission(
                         recyclerViewLayout.context,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                     )
+
                 }
-            }else {
-                Toast.makeText(it.context, "No internet connection", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    it.context,
+                    "No internet connection",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -164,9 +194,11 @@ class FavouriteMemesAdapter(
     }
 
 
-
-    private fun saveOnItemScroll(currentFavourite: FavouritesEntity, holder: FavouriteMemesAdapter.FavouritesViewHolder) {
-        if(selectedMemesList.contains(currentFavourite)){
+    private fun saveOnItemScroll(
+        currentFavourite: FavouritesEntity,
+        holder: FavouritesViewHolder
+    ) {
+        if (selectedMemesList.contains(currentFavourite)) {
             changeMemeStyle(holder, R.color.contextual_stroke_color)
         } else {
             changeMemeStyle(holder, R.color.card_stroke_color)
@@ -174,7 +206,7 @@ class FavouriteMemesAdapter(
     }
 
     private fun applySelection(holder: FavouritesViewHolder, currentFavourite: FavouritesEntity) {
-        if(selectedMemesList.contains(currentFavourite)){
+        if (selectedMemesList.contains(currentFavourite)) {
             selectedMemesList.remove(currentFavourite)
             changeMemeStyle(holder, R.color.card_stroke_color)
             applyActionModeTitle()
@@ -213,7 +245,7 @@ class FavouriteMemesAdapter(
     }
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-        if(item?.itemId == R.id.delete){
+        if (item?.itemId == R.id.delete) {
             selectedMemesList.forEach {
                 mainViewModel.deleteMeme(it)
             }
@@ -237,7 +269,7 @@ class FavouriteMemesAdapter(
     }
 
     private fun applyActionModeTitle() {
-        when(selectedMemesList.size){
+        when (selectedMemesList.size) {
             0 -> {
                 mActionMode.finish()
                 multiSelection = false
@@ -253,13 +285,14 @@ class FavouriteMemesAdapter(
         }
     }
 
-    private fun downloadMeme(context: Context, memeFileName: String, memeUrl: String, memeDrawable: Drawable) {
-
-    }
 
     // Show snackbar message on successful deletion
     private fun showSnackBar(message: String) {
-        Toast.makeText(requireActivity.applicationContext, "Successfully deleted item", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            requireActivity.applicationContext,
+            message,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     // Set list of favourites to favouritesList livedata
@@ -272,7 +305,7 @@ class FavouriteMemesAdapter(
     }
 
     fun clearContextualActionMode() {
-        if(this::mActionMode.isInitialized){
+        if (this::mActionMode.isInitialized) {
             mActionMode.finish()
         }
     }
