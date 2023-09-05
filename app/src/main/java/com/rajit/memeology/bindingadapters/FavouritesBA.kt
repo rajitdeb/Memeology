@@ -4,7 +4,6 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestListener
 import com.rajit.memeology.R
 
 class FavouritesBA {
@@ -15,12 +14,19 @@ class FavouritesBA {
         @BindingAdapter("android:loadImageFromFavourites")
         @JvmStatic
         fun loadImageFromFavourites(view: ImageView, memeImgUrl: String?) {
-            if(memeImgUrl != null){
+            if (memeImgUrl != null) {
+
+                /**
+                 * Glide has been used instead of COIL because of GIF support
+                 * it uses less code for GIF support than COIL
+                 * COIL needs separate image loaders and extension function for having GIF support
+                 * */
                 Glide.with(view)
                     .load(Uri.parse(memeImgUrl))
                     .error(R.drawable.placeholder)
                     .into(view)
-            }else{
+
+            } else {
                 view.setImageResource(R.drawable.placeholder)
             }
         }
