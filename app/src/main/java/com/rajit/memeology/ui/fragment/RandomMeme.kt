@@ -39,8 +39,6 @@ class RandomMeme : Fragment(), SensorEventListener {
     private lateinit var mSensorManager: SensorManager
     private var mSensor: Sensor? = null
 
-    private var lastUpdate: Long = -1
-
     private val TAG = "RandomMemeActivity"
 
     override fun onCreateView(
@@ -62,7 +60,7 @@ class RandomMeme : Fragment(), SensorEventListener {
 
         mainViewModel.getARandomMeme()
 
-        mainViewModel.randomMemeResponse.observe(viewLifecycleOwner, { result ->
+        mainViewModel.randomMemeResponse.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is NetworkResult.Success -> {
                     Log.i(TAG, "Response: ${result.data}")
@@ -163,7 +161,7 @@ class RandomMeme : Fragment(), SensorEventListener {
 
                 is NetworkResult.Loading -> showLoadingView()
             }
-        })
+        }
 
         return binding.root
     }
