@@ -1,5 +1,6 @@
 package com.rajit.memeology.ui.activity
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -22,10 +23,14 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.actionBarColor)))
+        window.navigationBarColor = resources.getColor(R.color.navColor)
+
         // for fragment container view to work we need to declare navHostFragment separately
         // and then find navController from that
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+
         navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(

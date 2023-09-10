@@ -13,6 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/screenBg"
         android:paddingBottom="16dp">
 
         <com.google.android.material.card.MaterialCardView
@@ -23,6 +24,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:elevation="15dp"
+            app:cardBackgroundColor="@color/cardBackgroundColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -39,7 +41,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="#"
-                    android:textColor="@color/black"
+                    android:textColor="@color/hastagColor"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{discoverMemeData.subreddit}"
-                    android:textColor="@color/black"
+                    android:textColor="@color/hastagColor"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/textView3"
@@ -69,7 +71,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/itemDownload"
                     app:layout_constraintEnd_toStartOf="@+id/itemDownload"
                     app:layout_constraintTop_toTopOf="@+id/itemDownload"
-                    app:tint="@color/grey" />
+                    app:tint="@color/favouriteBtnColor" />
 
                 <ImageView
                     android:id="@+id/itemDownload"
@@ -81,7 +83,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/itemShare"
                     app:layout_constraintEnd_toStartOf="@+id/itemShare"
                     app:layout_constraintTop_toTopOf="@+id/itemShare"
-                    app:tint="@color/grey" />
+                    app:tint="@color/downloadBtnColor" />
 
                 <ImageView
                     android:id="@+id/itemShare"
@@ -93,7 +95,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/itemAuthor"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/itemSubReddit"
-                    app:tint="@color/grey" />
+                    app:tint="@color/shareBtnColor" />
 
                 <TextView
                     android:id="@+id/textView7"
@@ -174,9 +176,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/link_to_post"
+                    android:textColor="@color/btnTextColor"
                     app:layout_constraintBottom_toBottomOf="@+id/itemLike"
                     app:layout_constraintEnd_toEndOf="@+id/itemMemeTitle"
-                    app:layout_constraintTop_toTopOf="@+id/itemLike" />
+                    app:layout_constraintTop_toTopOf="@+id/itemLikeImg" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
