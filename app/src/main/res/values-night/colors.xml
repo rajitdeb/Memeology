@@ -16,7 +16,7 @@
 
     <color name="purple">#6B00EE</color>
 
-    <color name="night_mode_primary">#15181E</color>
+    <color name="night_mode_primary">#111419</color>
 
     <color name="card_stroke_color">@color/light_grey</color>
     <color name="contextual_stroke_color">@color/colorPrimary</color>
@@ -28,27 +28,27 @@
     <color name="chipTextColor">#4B4B4B</color>
     <color name="checkedChipTextColor">@color/colorPrimary</color>
 
-    <color name="navColor">@color/white</color>
+    <color name="navColor">@color/black</color>
 
-    <color name="bottomNavBg">@color/colorPrimary</color>
+    <color name="bottomNavBg">@color/night_mode_primary</color>
     <color name="bottomNavActive">@color/white</color>
     <color name="bottomNavInactive">#B3FFFFFF</color>
-    <color name="screenBg">#F9F9F9</color>
+    <color name="screenBg">#1A1D23</color>
 
     <color name="btnColor">@color/colorPrimary</color>
     <color name="btnTextColor">@color/colorPrimary</color>
 
-    <color name="hastagColor">@color/black</color>
+    <color name="hastagColor">@color/light_grey</color>
 
     <color name="likeBtnColor">@color/white</color>
     <color name="likeBtnLabelColor">@color/white</color>
 
-    <color name="favouriteBtnColor">@color/grey</color>
-    <color name="downloadBtnColor">@color/grey</color>
-    <color name="shareBtnColor">@color/grey</color>
+    <color name="favouriteBtnColor">@color/white</color>
+    <color name="downloadBtnColor">@color/white</color>
+    <color name="shareBtnColor">@color/white</color>
 
-    <color name="cardBackgroundColor">@color/white</color>
+    <color name="cardBackgroundColor">@color/night_mode_primary</color>
 
-    <color name="actionBarColor">@color/colorPrimary</color>
+    <color name="actionBarColor">@color/night_mode_primary</color>
 
 </resources>
