@@ -41,5 +41,5 @@ Rajit Deb
 ## Find me on
 [![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/imrajit/)
 
-[1]: https://github.com/rajitdeb/Memeology/raw/main/apk/app-debug.apk
+[1]: https://github.com/rajitdeb/Memeology/raw/main/apk/memeology_sep23_with_night.apk
 [2]: https://github.com/D3vd/Meme_Api
