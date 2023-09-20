@@ -48,7 +48,7 @@ class DiscoverMeme : Fragment(), SearchView.OnQueryTextListener {
             setHasFixedSize(true)
         }
 
-        mainViewModel.searchMemesResponse.observe(viewLifecycleOwner) { result ->
+        mainViewModel.getSearchMemesResponse().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is NetworkResult.Success -> {
                     mAdapter.setData(result.data?.memes!!)

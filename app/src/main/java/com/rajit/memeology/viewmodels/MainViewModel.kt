@@ -5,15 +5,22 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.rajit.memeology.data.Repository
 import com.rajit.memeology.data.local.entities.FavouritesEntity
 import com.rajit.memeology.models.Meme
 import com.rajit.memeology.models.MultiMeme
 import com.rajit.memeology.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -25,30 +32,41 @@ class MainViewModel @Inject constructor(
 
     /** ROOM **/
 
-    var favouritesResponse: LiveData<List<FavouritesEntity>> =
-        repository.local.getAllFavourites().asLiveData()
-
-    fun saveMemes(favouritesEntity: FavouritesEntity) =
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.local.saveMemes(favouritesEntity)
+    suspend fun getFavorites(): LiveData<List<FavouritesEntity>> {
+        val job = CoroutineScope(Dispatchers.IO).async {
+            repository.local.getAllFavourites().asLiveData()
         }
 
-    fun deleteMeme(favouritesEntity: FavouritesEntity) =
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.local.deleteMeme(favouritesEntity)
-        }
+        return job.await()
+    }
+
+    fun saveMemes(favouritesEntity: FavouritesEntity) = viewModelScope.launch(Dispatchers.IO) {
+        repository.local.saveMemes(favouritesEntity)
+    }
+
+    fun deleteMeme(favouritesEntity: FavouritesEntity) = viewModelScope.launch(Dispatchers.IO) {
+        repository.local.deleteMeme(favouritesEntity)
+    }
 
     fun deleteAllFavourites() = viewModelScope.launch(Dispatchers.IO) {
         repository.local.deleteAllFavourites()
     }
 
     /** RETROFIT */
-    var randomMemeResponse: MutableLiveData<NetworkResult<Meme>> = MutableLiveData()
+    private var randomMemeResponse: MutableLiveData<NetworkResult<Meme>> = MutableLiveData()
 
-    var searchMemesResponse: MutableLiveData<NetworkResult<MultiMeme>> = MutableLiveData()
+    private var searchMemesResponse: MutableLiveData<NetworkResult<MultiMeme>> = MutableLiveData()
+
+    fun getRandomMemeResponse(): LiveData<NetworkResult<Meme>> {
+        return randomMemeResponse
+    }
 
     fun getARandomMeme() = viewModelScope.launch {
         getARandomMemeSafeCall()
+    }
+
+    fun getSearchMemesResponse(): LiveData<NetworkResult<MultiMeme>> {
+        return searchMemesResponse
     }
 
     fun searchMemes(subReddit: String) = viewModelScope.launch {
@@ -58,16 +76,17 @@ class MainViewModel @Inject constructor(
     private suspend fun getARandomMemeSafeCall() {
         randomMemeResponse.value = NetworkResult.Loading()
 
-        if(hasInternetConnection()){
+        if (hasInternetConnection()) {
             try {
-
-                val response = repository.remote.getARandomMeme()
-                randomMemeResponse.value = handleMemesResponse(response)
+                val job = CoroutineScope(Dispatchers.IO).async {
+                    repository.remote.getARandomMeme()
+                }
+                randomMemeResponse.value = handleMemesResponse(job.await())
 
             } catch (e: Exception) {
                 randomMemeResponse.value = NetworkResult.Error(e.message)
             }
-        }else {
+        } else {
             randomMemeResponse.value = NetworkResult.Error("No internet connection")
         }
 
@@ -77,16 +96,17 @@ class MainViewModel @Inject constructor(
         Log.i("MainViewModel", "MainViewModel: searchMemesSafeCall: $subReddit")
         searchMemesResponse.value = NetworkResult.Loading()
 
-        if(hasInternetConnection()){
+        if (hasInternetConnection()) {
             try {
-
-                val response = repository.remote.searchMemes(subReddit)
-                searchMemesResponse.value = handleMultiMemesResponse(response)
+                val job = CoroutineScope(Dispatchers.IO).async {
+                    repository.remote.searchMemes(subReddit)
+                }
+                searchMemesResponse.value = handleMultiMemesResponse(job.await())
 
             } catch (e: Exception) {
                 searchMemesResponse.value = NetworkResult.Error(e.message)
             }
-        }else {
+        } else {
             searchMemesResponse.value = NetworkResult.Error("No internet connection")
         }
     }

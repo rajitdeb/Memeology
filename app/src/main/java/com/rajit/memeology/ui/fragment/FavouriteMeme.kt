@@ -1,6 +1,7 @@
 package com.rajit.memeology.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -11,6 +12,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rajit.memeology.R
 import com.rajit.memeology.adapters.FavouriteMemesAdapter
@@ -18,9 +20,13 @@ import com.rajit.memeology.databinding.FragmentFavouriteMemeBinding
 import com.rajit.memeology.utils.PostActions
 import com.rajit.memeology.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+private const val TAG = "FavouriteMeme"
 
 @AndroidEntryPoint
-class FavouriteMeme : Fragment(){
+class FavouriteMeme : Fragment() {
 
     private var _binding: FragmentFavouriteMemeBinding? = null
     private val binding get() = _binding!!
@@ -46,9 +52,11 @@ class FavouriteMeme : Fragment(){
             setHasFixedSize(true)
         }
 
-        // Read Favourites
-        mainViewModel.favouritesResponse.observe(viewLifecycleOwner) { result ->
-            mAdapter.setData(result)
+        lifecycleScope.launch {
+            // Read Favourites
+            mainViewModel.getFavorites().observe(viewLifecycleOwner) { result ->
+                mAdapter.setData(result)
+            }
         }
 
         return binding.root
@@ -59,27 +67,28 @@ class FavouriteMeme : Fragment(){
 
         val menuHost: MenuHost = requireActivity()
 
-        menuHost.addMenuProvider(object: MenuProvider {
+        menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.favourite_meme_menu, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                if(menuItem.itemId == R.id.deleteAll){
-                    if (mainViewModel.favouritesResponse.value!!.isNotEmpty()) {
+                if (menuItem.itemId == R.id.deleteAll) {
 
-                        mainViewModel.deleteAllFavourites()
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        if (mainViewModel.getFavorites().value!!.isNotEmpty()) {
+                            mainViewModel.deleteAllFavourites()
 
-                        postActions.showSnackBarMessage(
-                            binding.coordinatorLayout,
-                            "Deleted all items from favourites"
-                        )
-
-                    } else {
-                        postActions.showSnackBarMessage(
-                            binding.coordinatorLayout,
-                            "Nothing to delete"
-                        )
+                            postActions.showSnackBarMessage(
+                                binding.coordinatorLayout,
+                                "Deleted all items from favourites"
+                            )
+                        } else {
+                            postActions.showSnackBarMessage(
+                                binding.coordinatorLayout,
+                                "Nothing to delete"
+                            )
+                        }
                     }
                 }
 
