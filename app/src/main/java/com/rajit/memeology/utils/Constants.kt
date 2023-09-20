@@ -1,5 +1,7 @@
 package com.rajit.memeology.utils
 
+import com.rajit.memeology.models.Meme
+
 class Constants {
 
     companion object {

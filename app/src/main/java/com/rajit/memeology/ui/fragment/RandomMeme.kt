@@ -19,12 +19,17 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.rajit.memeology.data.local.entities.FavouritesEntity
 import com.rajit.memeology.databinding.FragmentRandomMemeBinding
 import com.rajit.memeology.models.Meme
 import com.rajit.memeology.utils.*
 import com.rajit.memeology.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RandomMeme : Fragment(), SensorEventListener {
@@ -60,7 +65,7 @@ class RandomMeme : Fragment(), SensorEventListener {
 
         mainViewModel.getARandomMeme()
 
-        mainViewModel.randomMemeResponse.observe(viewLifecycleOwner) { result ->
+        mainViewModel.getRandomMemeResponse().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is NetworkResult.Success -> {
                     Log.i(TAG, "Response: ${result.data}")
@@ -104,13 +109,16 @@ class RandomMeme : Fragment(), SensorEventListener {
                                 postActions.shareMeme(requireContext(), shareText)
                             }
 
-                        // check of the meme is already in favourites
-                        mainViewModel.favouritesResponse.observe(viewLifecycleOwner) { favouritesList ->
-                            for (meme in favouritesList) {
-                                if (memeData.url == meme.meme.url) {
-                                    binding.itemFavourites.setImageResource(com.rajit.memeology.R.drawable.ic_bookmark)
-                                } else {
-                                    binding.itemFavourites.setImageResource(com.rajit.memeology.R.drawable.ic_bookmark_temp)
+
+                        lifecycleScope.launch {
+
+                            mainViewModel.getFavorites().observe(viewLifecycleOwner) { favouritesList ->
+                                for (meme in favouritesList) {
+                                    if (memeData.url == meme.meme.url) {
+                                        binding.itemFavourites.setImageResource(com.rajit.memeology.R.drawable.ic_bookmark)
+                                    } else {
+                                        binding.itemFavourites.setImageResource(com.rajit.memeology.R.drawable.ic_bookmark_temp)
+                                    }
                                 }
                             }
                         }
@@ -214,11 +222,9 @@ class RandomMeme : Fragment(), SensorEventListener {
 
             // provides a value for the acceleration / shake in x axis
             val x = event.values[0]
-            Log.d(TAG, "detectShakeAndChangeToNextMeme: x intensity: $x")
             
             if (x > 8f && x < 10f) {
                 mainViewModel.getARandomMeme()
-                Log.d(TAG, "detectShakeAndChangeToNextMeme: Gotcha @ $x")
             }
         }
     }
