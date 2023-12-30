@@ -8,15 +8,10 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Environment.DIRECTORY_DCIM
-import android.os.Environment.DIRECTORY_PICTURES
 import android.provider.MediaStore
 import android.widget.Toast
-import com.bumptech.glide.load.resource.gif.GifDrawable
 import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import java.nio.ByteBuffer
 
 class DownloadUtil {
 
