@@ -8,15 +8,10 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Environment.DIRECTORY_DCIM
-import android.os.Environment.DIRECTORY_PICTURES
 import android.provider.MediaStore
 import android.widget.Toast
-import com.bumptech.glide.load.resource.gif.GifDrawable
 import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import java.nio.ByteBuffer
 
 class DownloadUtil {
 
@@ -63,12 +58,12 @@ class DownloadUtil {
                             context.contentResolver.openOutputStream(uri).use { outputStream ->
                                 when {
                                     fileName.contains(".jpg") -> {
-                                        if (!bmp.compress(Bitmap.CompressFormat.JPEG, 95, outputStream)) {
+                                        if (!bmp.compress(Bitmap.CompressFormat.JPEG, 95, outputStream!!)) {
                                             throw IOException("couldn't save bitmap")
                                         }
                                     }
                                     fileName.contains(".png") -> {
-                                        if (!bmp.compress(Bitmap.CompressFormat.PNG, 95, outputStream)) {
+                                        if (!bmp.compress(Bitmap.CompressFormat.PNG, 95, outputStream!!)) {
                                             throw IOException("couldn't save bitmap")
                                         }
                                     }

@@ -1,15 +1,12 @@
 package com.rajit.memeology.ui.fragment
 
 import android.Manifest
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -19,16 +16,18 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.rajit.memeology.data.local.entities.FavouritesEntity
 import com.rajit.memeology.databinding.FragmentRandomMemeBinding
 import com.rajit.memeology.models.Meme
-import com.rajit.memeology.utils.*
+import com.rajit.memeology.utils.CustomTab
+import com.rajit.memeology.utils.DownloadUtil
+import com.rajit.memeology.utils.NetworkResult
+import com.rajit.memeology.utils.PermissionUtil
+import com.rajit.memeology.utils.PostActions
+import com.rajit.memeology.utils.sdk29AndUp
 import com.rajit.memeology.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -128,17 +127,11 @@ class RandomMeme : Fragment(), SensorEventListener {
                         }
 
                         binding.itemLinkToPost.setOnClickListener {
-                            val postUrl = Uri.parse(memeData.postLink)
-                            val takeMeToOriginalPost = Intent(Intent.ACTION_VIEW, postUrl)
-                            try {
-                                startActivity(takeMeToOriginalPost)
-                            } catch (e: ActivityNotFoundException) {
-                                Log.e(TAG, "takeMeToOriginalPost: Error occurred - ${e.message}")
-                                postActions.showSnackBarMessage(
-                                    binding.coordinatorLayout,
-                                    e.message.toString()
-                                )
-                            }
+                            val postUrl = memeData.postLink
+
+                            // Load URL on Custom Tab
+                            CustomTab.loadURL(requireContext(), postUrl)
+
                         }
 
                         binding.nextBtn.setOnClickListener {

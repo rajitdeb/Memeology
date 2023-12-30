@@ -1,10 +1,7 @@
 package com.rajit.memeology.adapters
 
 import android.Manifest
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.util.Log
 import android.view.ActionMode
 import android.view.LayoutInflater
@@ -15,13 +12,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rajit.memeology.R
 import com.rajit.memeology.data.local.entities.FavouritesEntity
 import com.rajit.memeology.databinding.ItemFavouriteRowBinding
+import com.rajit.memeology.utils.CustomTab
 import com.rajit.memeology.utils.DownloadUtil
 import com.rajit.memeology.utils.MemesDiffUtil
 import com.rajit.memeology.utils.PermissionUtil
@@ -155,17 +152,9 @@ class FavouriteMemesAdapter(
         }
 
         holder.binding.itemLinkToPost.setOnClickListener {
-            val postUrl = Uri.parse(currentFavourite.meme.postLink)
-            val takeMeToOriginalPost = Intent(Intent.ACTION_VIEW, postUrl)
-            try {
-                startActivity(it.context, takeMeToOriginalPost, null)
-            } catch (e: ActivityNotFoundException) {
-                Log.e(
-                    "FavouriteMemesAdapter",
-                    "takeMeToOriginalPost: Error occurred - ${e.message}"
-                )
-                Toast.makeText(it.context, "${e.message}", Toast.LENGTH_SHORT).show()
-            }
+            val postUrl = currentFavourite.meme.postLink
+            CustomTab.loadURL(recyclerViewLayout.context, postUrl)
+
         }
 
         saveOnItemScroll(currentFavourite, holder)
