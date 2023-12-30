@@ -63,12 +63,12 @@ class DownloadUtil {
                             context.contentResolver.openOutputStream(uri).use { outputStream ->
                                 when {
                                     fileName.contains(".jpg") -> {
-                                        if (!bmp.compress(Bitmap.CompressFormat.JPEG, 95, outputStream)) {
+                                        if (!bmp.compress(Bitmap.CompressFormat.JPEG, 95, outputStream!!)) {
                                             throw IOException("couldn't save bitmap")
                                         }
                                     }
                                     fileName.contains(".png") -> {
-                                        if (!bmp.compress(Bitmap.CompressFormat.PNG, 95, outputStream)) {
+                                        if (!bmp.compress(Bitmap.CompressFormat.PNG, 95, outputStream!!)) {
                                             throw IOException("couldn't save bitmap")
                                         }
                                     }

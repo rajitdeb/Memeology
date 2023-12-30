@@ -128,17 +128,11 @@ class RandomMeme : Fragment(), SensorEventListener {
                         }
 
                         binding.itemLinkToPost.setOnClickListener {
-                            val postUrl = Uri.parse(memeData.postLink)
-                            val takeMeToOriginalPost = Intent(Intent.ACTION_VIEW, postUrl)
-                            try {
-                                startActivity(takeMeToOriginalPost)
-                            } catch (e: ActivityNotFoundException) {
-                                Log.e(TAG, "takeMeToOriginalPost: Error occurred - ${e.message}")
-                                postActions.showSnackBarMessage(
-                                    binding.coordinatorLayout,
-                                    e.message.toString()
-                                )
-                            }
+                            val postUrl = memeData.postLink
+
+                            // Load URL on Custom Tab
+                            CustomTab.loadURL(requireContext(), postUrl)
+
                         }
 
                         binding.nextBtn.setOnClickListener {

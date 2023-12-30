@@ -10,6 +10,7 @@ import com.rajit.memeology.R
 import com.rajit.memeology.data.local.entities.FavouritesEntity
 import com.rajit.memeology.databinding.ItemDiscoverMemeBinding
 import com.rajit.memeology.models.Meme
+import com.rajit.memeology.utils.CustomTab
 import com.rajit.memeology.utils.MemesDiffUtil
 import com.rajit.memeology.utils.PostActions
 import com.rajit.memeology.viewmodels.MainViewModel
@@ -47,6 +48,12 @@ class DiscoverMemesAdapter(
                 )
                 postActions.shareMeme(it.context, shareText)
             }
+
+            binding.itemLinkToPost.setOnClickListener {
+                val postUrl = currentMeme.url
+                CustomTab.loadURL(it.context, postUrl)
+            }
+
         }
 
         companion object {
