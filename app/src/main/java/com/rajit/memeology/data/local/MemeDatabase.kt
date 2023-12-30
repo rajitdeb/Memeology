@@ -1,13 +1,10 @@
 package com.rajit.memeology.data.local
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.rajit.memeology.data.local.dao.MemesDao
 import com.rajit.memeology.data.local.entities.FavouritesEntity
-import com.rajit.memeology.utils.Constants.Companion.DATABASE_NAME
 
 @Database(
     entities = [FavouritesEntity::class],
