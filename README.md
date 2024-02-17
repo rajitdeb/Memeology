@@ -19,7 +19,8 @@ A memes app for all the memes lovers. This app shows memes from `Reddit`, and ha
 | ![Splash Screen](https://i.postimg.cc/L56sNP68/1.jpg) | ![Random Meme Screen](https://i.postimg.cc/SxLwNvfH/2.jpg) | ![Discover Meme Screen](https://i.postimg.cc/Bb1zWYvY/3.jpg) |
 | ![Discover Meme Screen - No Internet](https://i.postimg.cc/bw8qTbCc/4.jpg) | ![Discover Meme Screen - No results found](https://i.postimg.cc/8k6Dgwxg/5.jpg) | ![Favourites Screen](https://i.postimg.cc/0yc104KD/6.jpg) |
 | ![Favourites Screen - Meme Selected](https://i.postimg.cc/sxptQHRB/7.jpg) | ![Splash Screen - Night Mode](https://i.postimg.cc/8PYJ7zz0/8.jpg) | ![Random Meme Screen - Night Mode](https://i.postimg.cc/2ybYMrN1/9.jpg) |
-| ![Discover Meme Screen - Night Mode](https://i.postimg.cc/JzcL9pv5/10.jpg) | ![Favourites Screen - Night Mode](https://i.postimg.cc/k5ggwrGb/11.jpg) |
+| ![Discover Meme Screen - Night Mode](https://i.postimg.cc/JzcL9pv5/10.jpg) | ![Favourites Screen - Night Mode](https://i.postimg.cc/k5ggwrGb/11.jpg) | [![web-L.jpg](https://i.postimg.cc/44DrVdh8/web-L.jpg)](https://postimg.cc/JtQ6WRxJ) |
+| [![web-L2.jpg](https://i.postimg.cc/VN48F8cJ/web-L2.jpg)](https://postimg.cc/hJJ6SNvn) | [![web-D1.jpg](https://i.postimg.cc/yYFYS2WZ/web-D1.jpg)](https://postimg.cc/1f3ZkCGm) | [![web-D2.jpg](https://i.postimg.cc/3rG3PzXc/web-D2.jpg)](https://postimg.cc/V5YytGHq)|
 
 ## Download APK 📂
 APK for the project can be found [here][1]
@@ -40,5 +41,5 @@ Rajit Deb
 ## Find me on 🔍
 [![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/imrajit/)
 
-[1]: https://github.com/rajitdeb/Memeology/raw/main/apk/memeology_sep23_with_night.apk
+[1]: https://github.com/rajitdeb/Memeology/releases/download/release/Memeology-v1.0.0-17Feb24.apk
 [2]: https://github.com/D3vd/Meme_Api
